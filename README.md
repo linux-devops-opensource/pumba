@@ -1,4 +1,4 @@
-#  ![](pictures/pumba-icon.jpg = 60x) PUMBA
+#  ![](pictures/pumba-icon.jpg =60x) PUMBA
 **Package Upload Manager with Basic Analyzing**
 
 ## What is Pumba ?
