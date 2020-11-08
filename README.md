@@ -1,5 +1,5 @@
-# pumba-main
-**_Package Upload Manager with Basic Analyzing_**
+# pumba
+**Package Upload Manager with Basic Analyzing**
 
 ## What is Pumba ?
 Pumba is a package uploading solution for organizations that wants to keep their repositories clean & safe.  
