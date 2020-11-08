@@ -1,4 +1,4 @@
-![](./pictures/pumba-icon.jpg =60x) 
+![](./pictures/pumba-icon.jpg | width=60) 
 # PUMBA
 **Package Upload Manager with Basic Analyzing**
 
