@@ -1,4 +1,6 @@
-<img src="./pictures/pumba-icon.jpg" width="200" align="center">
+<p align="center">
+    <img src="./pictures/pumba-icon.jpg" width="200">
+</p>
 
 # PUMBA
 **Package Upload Manager with Basic Analyzing**
