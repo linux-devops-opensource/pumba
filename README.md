@@ -1,4 +1,4 @@
-# PUMBA
+#  ![](pictures/pumba-icon.jpg) PUMBA
 **Package Upload Manager with Basic Analyzing**
 
 ## What is Pumba ?
