@@ -1,0 +1,23 @@
+{
+  "name": "pumba-rpm-validator",
+  "version": "0.0.1",
+  "description": "Validates the installation for rpms. made for pumba",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linux-devops-opensource/pumba.git"
+  },
+  "author": "Shir Monether",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/linux-devops-opensource/pumba/issues"
+  },
+  "homepage": "https://github.com/linux-devops-opensource/pumba#readme",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "debug": "^4.3.1"
+  }
+}
