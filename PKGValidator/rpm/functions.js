@@ -26,40 +26,45 @@ async function getRPMs() {
         await downloadRPM(`${dlUrl}${rpmName}`, `${rpmdir}/${rpmName}`)
     }
     do {
+        loopbacktoken = false
+        superDebug(`start while loop, loopbacktoken: ${loopbacktoken}`)
         try {
             await validateRPMs()
         } catch (err) {
             errDebug(err)
         }
-        superDebug(loopbacktoken)
+        superDebug(`end of while loop, loopbacktoken: ${loopbacktoken}`)
     } while (loopbacktoken)
     console.log('RPM package validator has finished')
 }
 
 function validateRPMs() {
     return new Promise((res, rej) => {
-        fs.readdirSync(rpmdir).forEach(async (file) => {
-            let stdout = execSync(`file ${rpmdir}/${file}`).toString()
-            if (stdout.includes("RPM")) {
-                try {
-                    await testinstallRPM(`${rpmdir}/${file}`)
-                } catch (err) {
+        if (fs.readdirSync(rpmdir).length != 0) {
+            fs.readdirSync(rpmdir).forEach(async (file) => {
+                let stdout = execSync(`file ${rpmdir}/${file}`).toString()
+                if (stdout.includes("RPM")) {
+                    try {
+                        await testinstallRPM(`${rpmdir}/${file}`)
+                    } catch (err) {
+                        rej(err)
+                    }
+                    res(true)
+                } else {
+                    const err = `File "${file}" is not an RPM package`
+                    errDebug(err)
                     rej(err)
                 }
-                res(true)
-            } else {
-                const err = `File "${file}" is not an RPM package`
-                errDebug(err)
-                rej(err)
-            }
-        })
+            })
+        } else {
+            res('There are no files in the validate directory')
+        }
     })
 }
 
 function testinstallRPM(rpm) {
     return new Promise(async (res, rej) => {
         console.log(`Validating Package ${rpm}`)
-        loopbacktoken = false
         superDebug(`Stage testinstallRPM:start loopbacktoken: ${loopbacktoken}`)
         try {
             const stdout = execSync(`yum -y install ${rpm} --setopt=tsflags=test --setopt=keepcache=0`, {stdio: [stderr]}).toString()
