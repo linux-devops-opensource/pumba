@@ -1,22 +1,30 @@
-const fs = require('fs');
-const assert = require('assert');
+const fs = require('fs')
+const chai = require('chai')
+const sinon = require('sinon')
 
+const testRPM = 'zsh-5.8-3.fc33.x86_64.rpm'
 const functions = require('../functions')
 
-// describe('Delete RPM test', function() {
-//     it('If the function successfully deletes a file it should return true', async function() {
-//         fs.copyFileSync('./test/testresources/zsh-5.8-3.fc33.x86_64.rpm', './test/testsandbox/zsh-5.8-3.fc33.x86_64.rpm');
-//         let result = await functions.deleteRPMfile('./test/testsandbox/zsh-5.8-3.fc33.x86_64.rpm')
-//         assert.ok(result, 'Unable to delete RPM')
-//     });
-// })
+//create sandbox
+fs.mkdirSync("./test/testsandbox", { recursive: true })
 
 describe('Delete RPM test', function() {
     it('If the function successfully deletes a file the file should no longer exist in the sandbox', async function() {
-        const testRPM = 'zsh-5.8-3.fc33.x86_64.rpm'
         fs.copyFileSync(`./test/testresources/${testRPM}`, `./test/testsandbox/${testRPM}`);
         await functions.deleteRPMfile(`./test/testsandbox/${testRPM}`)
         let fileExists = fs.existsSync(testRPM)
-        assert.ok(!fileExists, 'Unable to delete RPM')
+        chai.expect(fileExists).to.be.false
     });
+})
+
+describe('Test install RPM', function() {
+    it('If the installation is successful we should get no errors', async function () {
+        this.timeout(6000)
+        fs.copyFileSync(`./test/testresources/${testRPM}`, `./test/testsandbox/${testRPM}`)
+        sinon.stub(functions, "deleteRPMfile").returns(true)
+        const result = await functions.testinstallRPM(`./test/testsandbox/${testRPM}`)
+        chai.expect(result).to.be.true
+        //clean up sandbox
+        //fs.rmdirSync('./test/testsandbox', { recursive: true })
+    })
 })

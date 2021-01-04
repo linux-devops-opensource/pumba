@@ -4,27 +4,40 @@ const { execSync } = require('child_process')
 const fs = require('fs')
 const axios = require('axios')
 const { stderr } = require('process')
-const dlUrl = 'http://192.168.122.1/rpms/'
 const rpmdir = './rpms4test'
 var loopbacktoken = false
 
-exports.deleteRPMfile = deleteRPMfile
-exports.getRPMs = getRPMs
-exports.validateRPMs = validateRPMs
-exports.testinstallRPM = testinstallRPM
-exports.downloadRPM = downloadRPM
+// functions block and export and use of funxtions. in this file is so that we can use nested stubs in our tests.
+// if we don't call the functions from this block they will be imported to the test module and use the nested local functions and not as a global function
+// that we can stub
+const functions = {
+    deleteRPMfile,
+    getRPMs,
+    validateRPMs,
+    testinstallRPM,
+    downloadRPM,
+    downloadRPMs,
+    validation
+}
+module.exports = functions;
 
-async function getRPMs() {
+async function getRPMs(dlUrl) {
     const res = await axios({
         url: dlUrl,
         method: 'GET'
     })
-    const rpms = res.data.match(/.*\.rpm/g)
+    return res.data.match(/.*\.rpm/g)
+}
+
+async function downloadRPMs(rpms, dlUrl) {
     const amount = rpms.length
     for ( i = 0; i < amount; i++) {
         const rpmName = rpms[i].split("\"")[1]
         await downloadRPM(`${dlUrl}${rpmName}`, `${rpmdir}/${rpmName}`)
     }
+}
+
+async function validation() {
     do {
         loopbacktoken = false
         superDebug(`start while loop, loopbacktoken: ${loopbacktoken}`)
@@ -57,7 +70,7 @@ function validateRPMs() {
                 }
             })
         } else {
-            res('There are no files in the validate directory')
+            res(`There are no files in the validate directory: ${rpmdir}`)
         }
     })
 }
@@ -71,7 +84,7 @@ function testinstallRPM(rpm) {
             superDebug(stdout)
             console.log(`Package ${rpm} installed successfully`)
             loopbacktoken = true
-            await deleteRPMfile(rpm)
+            await functions.deleteRPMfile(rpm)
             res(true)
         } catch (err) {
             const stderr = err.stderr
