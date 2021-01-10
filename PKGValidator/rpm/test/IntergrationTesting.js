@@ -1,7 +1,7 @@
 const fs = require('fs')
 const chai = require('chai')
 const sinon = require('sinon')
-
+    git 
 const testRPM = 'zsh-5.8-3.fc33.x86_64.rpm'
 const functions = require('../functions')
 
@@ -19,7 +19,7 @@ describe('Delete RPM test', function() {
 
 describe('Test install RPM', function() {
     it('If the installation is successful we should get no errors', async function () {
-        this.timeout(6000)
+        this.timeout(7000)
         fs.copyFileSync(`./test/testresources/${testRPM}`, `./test/testsandbox/${testRPM}`)
         sinon.stub(functions, "deleteRPMfile").returns(true)
         const result = await functions.testinstallRPM(`./test/testsandbox/${testRPM}`)

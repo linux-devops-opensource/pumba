@@ -6,7 +6,8 @@ RUN curl -sL https://rpm.nodesource.com/setup_14.x | bash - && \
     yum install -y file --disablerepo=* --enablerepo=rhel-7-server-rpms && \
     yum clean all && \
     mkdir ./rpms4test
-COPY . .
+COPY package.json .
 RUN npm i
+COPY . .
 
 CMD [ "node", "index.js" ]

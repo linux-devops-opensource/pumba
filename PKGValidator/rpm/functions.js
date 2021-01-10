@@ -4,7 +4,7 @@ const { execSync } = require('child_process')
 const fs = require('fs')
 const axios = require('axios')
 const { stderr } = require('process')
-const rpmdir = './rpms4test'
+const genfunc = require('./genericfunctions')
 var loopbacktoken = false
 
 // functions block and export and use of funxtions. in this file is so that we can use nested stubs in our tests.
@@ -15,34 +15,21 @@ const functions = {
     getRPMs,
     validateRPMs,
     testinstallRPM,
-    downloadRPM,
-    downloadRPMs,
     validation
 }
 module.exports = functions;
 
 async function getRPMs(dlUrl) {
-    const res = await axios({
-        url: dlUrl,
-        method: 'GET'
-    })
-    return res.data.match(/.*\.rpm/g)
+    const getindex = await genfunc.getPackages(dlUrl)
+    return getindex.match(/.*\.rpm/g)
 }
 
-async function downloadRPMs(rpms, dlUrl) {
-    const amount = rpms.length
-    for ( i = 0; i < amount; i++) {
-        const rpmName = rpms[i].split("\"")[1]
-        await downloadRPM(`${dlUrl}${rpmName}`, `${rpmdir}/${rpmName}`)
-    }
-}
-
-async function validation() {
+async function validation(rpmdir) {
     do {
         loopbacktoken = false
         superDebug(`start while loop, loopbacktoken: ${loopbacktoken}`)
         try {
-            await validateRPMs()
+            await validateRPMs(rpmdir)
         } catch (err) {
             errDebug(err)
         }
@@ -51,7 +38,7 @@ async function validation() {
     console.log('RPM package validator has finished')
 }
 
-function validateRPMs() {
+function validateRPMs(rpmdir) {
     return new Promise((res, rej) => {
         if (fs.readdirSync(rpmdir).length != 0) {
             fs.readdirSync(rpmdir).forEach(async (file) => {
@@ -90,50 +77,11 @@ function testinstallRPM(rpm) {
             const stderr = err.stderr
             if (stderr.includes("Requires") || stderr.includes("nothing provides")) {
                 console.log(`Package ${rpm} has missing dependencies...`)
+                errDebug(err)
             } else {
                 console.log(`Unable to install package ${rpm}, run debug mode to view error`)
                 errDebug(err)
             }
-            rej(err)
-        }
-    })
-}
-
-function downloadRPM(fileUrl, outputLocationPath) {
-    const writer = fs.createWriteStream(outputLocationPath);
-    return axios({
-      method: 'get',
-      url: fileUrl,
-      responseType: 'stream',
-    }).then((response) => {
-      return new Promise(async (res, rej) => {
-        response.data.pipe(writer);
-        let error = null;
-        writer.on('error', err => {
-          error = err;
-          writer.close();
-          console.log(err)
-          rej(err);
-        });
-        writer.on('close', () => {
-            if (!error) {
-                console.log(fileUrl, 'download complete')
-                res(true);
-            }
-        });
-      });
-    });
-}
-
-function deleteRPMfile(rpm) {
-    return new Promise ((res, rej) => {
-        try {
-            fs.unlinkSync(rpm)
-            console.log(`Deleted rpm ${rpm} succesfully`)
-            res(true)
-        } catch (err) {
-            console.log(`Error deleting rpm file ${rpm} run debug to see error`)
-            errDebug(err)
             rej(err)
         }
     })
