@@ -1,0 +1,20 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  name: pval-rpm-pipeline-run
+spec:
+  serviceAccountName: build-bot
+  pipelineRef:
+    name: pumba-generic-pipeline
+  params:
+    - name: pumba-object
+      value: PKGValidator/rpm
+  resources:
+  - name: image
+    resourceRef:
+      name: pval-rpmval-image
+  - name: source
+    resourceRef:
+      name: pval-rpmval-git
+  # workspaces: 
+  # - name: pipeline-ws

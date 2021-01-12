@@ -1,0 +1,28 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: container-build-task
+spec:
+  resources:
+    inputs:
+      - name: source
+        type: git
+    outputs:
+      - name: image
+        type: image
+  params:
+    - name: pumba-object
+      description: location of the pumba micro-service code
+      type: string
+  steps:
+    - name: buildah
+      image: quay.io/buildah/stable:v1.11.0
+      workingDir: /workspace/source/$(params.pumba-object)
+      securityContext:
+        privileged: true
+      script: |
+        #!/bin/bash
+        buildah login registry.redhat.io && \
+        buildah bud -t $(resources.outputs.image.url) . && \
+        buildah login docker.io && \
+        buildah push $(resources.outputs.image.url)
