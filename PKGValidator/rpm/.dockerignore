@@ -1,6 +1,7 @@
 .dockerignore
 .gitignore
-package-lock.json
 rpms4test
 node_modules
 test
+tekton
+README.md
