@@ -1,0 +1,13 @@
+[rhel-7-server-rpms-pumba]
+metadata_expire = 86400
+enabled_metadata = 1
+sslclientcert = /software/security/8888821588300885789.pem
+baseurl = https://cdn.redhat.com/content/dist/rhel/server/7/$releasever/$basearch/os
+ui_repoid_vars = releasever basearch
+sslverify = 1
+name = Red Hat Enterprise Linux 7 Server (RPMs)
+sslclientkey = /software/security/8888821588300885789-key.pem
+gpgkey = file:///software/security/RPM-GPG-KEY-redhat-release
+enabled = 0
+sslcacert = /software/security/redhat-uep.pem
+gpgcheck = 1
