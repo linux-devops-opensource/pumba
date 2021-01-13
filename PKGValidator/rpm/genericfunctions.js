@@ -1,9 +1,11 @@
 const axios = require('axios')
 const fs = require('fs')
+const errDebug = require('debug')('debug:err')
 
 const functions = {
     getPackages,
-    downloadPackages
+    downloadPackages,
+    deletePackagefile
 }
 module.exports = functions;
 

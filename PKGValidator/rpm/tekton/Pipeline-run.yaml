@@ -16,5 +16,3 @@ spec:
   - name: source
     resourceRef:
       name: pval-rpmval-git
-  # workspaces: 
-  # - name: pipeline-ws

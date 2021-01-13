@@ -16,7 +16,7 @@ spec:
       type: string
   steps:
     - name: buildah
-      image: quay.io/buildah/stable:v1.11.0
+      image: quay.io/buildah/stable:v1.17.0
       workingDir: /workspace/source/$(params.pumba-object)
       securityContext:
         privileged: true

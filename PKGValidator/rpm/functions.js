@@ -2,16 +2,15 @@ const errDebug = require('debug')('debug:err')
 const superDebug = require('debug')('debug:stdout')
 const { execSync } = require('child_process')
 const fs = require('fs')
-const axios = require('axios')
 const { stderr } = require('process')
 const genfunc = require('./genericfunctions')
 var loopbacktoken = false
+let workingRPMS = []
 
 // functions block and export and use of funxtions. in this file is so that we can use nested stubs in our tests.
 // if we don't call the functions from this block they will be imported to the test module and use the nested local functions and not as a global function
 // that we can stub
 const functions = {
-    deleteRPMfile,
     getRPMs,
     validateRPMs,
     testinstallRPM,
@@ -35,6 +34,7 @@ async function validation(rpmdir) {
         }
         superDebug(`end of while loop, loopbacktoken: ${loopbacktoken}`)
     } while (loopbacktoken)
+    superDebug(workingRPMS)
     console.log('RPM package validator has finished')
 }
 
@@ -46,6 +46,7 @@ function validateRPMs(rpmdir) {
                 if (stdout.includes("RPM")) {
                     try {
                         await testinstallRPM(`${rpmdir}/${file}`)
+                        workingRPMS.push(file)
                     } catch (err) {
                         rej(err)
                     }
@@ -71,7 +72,7 @@ function testinstallRPM(rpm) {
             superDebug(stdout)
             console.log(`Package ${rpm} installed successfully`)
             loopbacktoken = true
-            await functions.deleteRPMfile(rpm)
+            await genfunc.deletePackagefile(rpm)
             res(true)
         } catch (err) {
             const stderr = err.stderr
