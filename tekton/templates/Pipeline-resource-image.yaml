@@ -1,0 +1,9 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: #Name of resource for image name per micro-service
+spec:
+  type: image
+  params:
+  - name: url
+    value: #Image url

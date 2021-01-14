@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: #Name of resource for branch
+spec:
+  type: git
+  params:
+    - name: revision
+      value: #Branch name
+    - name: url
+      value: https://github.com/linux-devops-opensource/pumba.git

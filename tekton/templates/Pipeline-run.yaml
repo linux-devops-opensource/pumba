@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  name: #Pipeline run name per micro-service
+spec:
+  serviceAccountName: build-bot
+  pipelineRef:
+    name: pumba-generic-pipeline
+  params:
+    - name: pumba-object
+      value: #Relitive directory for micro-service files
+  resources:
+  - name: image
+    resourceRef:
+      name: #Micro-service pipeline image resource
+  - name: source
+    resourceRef:
+      name: #Micro-service pipeline git resource
+  workspaces:
+  - name: pipeline-ws
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
