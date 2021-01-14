@@ -64,7 +64,7 @@ function validateRPMs(rpmdir) {
 }
 
 function testinstallRPM(rpm) {
-    return new Promise(async (res, rej) => {
+    return new Promise((res, rej) => {
         console.log(`Validating Package ${rpm}`)
         superDebug(`Stage testinstallRPM:start loopbacktoken: ${loopbacktoken}`)
         try {
@@ -72,7 +72,7 @@ function testinstallRPM(rpm) {
             superDebug(stdout)
             console.log(`Package ${rpm} installed successfully`)
             loopbacktoken = true
-            await genfunc.deletePackagefile(rpm)
+            genfunc.deletePackagefile(rpm)
             res(true)
         } catch (err) {
             const stderr = err.stderr

@@ -19,7 +19,7 @@ async function getPackages(dlUrl) {
 
 async function downloadPackages(packagelist, dlUrl, targetDir) {
     const amount = packagelist.length
-    for ( i = 0; i < amount; i++) {
+    for ( let i = 0; i < amount; i++) {
         const packageName = packagelist[i].split("\"")[1]
         await downloadPackage(`${dlUrl}${packageName}`, `${targetDir}/${packageName}`)
     }
@@ -32,7 +32,7 @@ function downloadPackage(fileUrl, outputLocationPath) {
       url: fileUrl,
       responseType: 'stream',
     }).then((response) => {
-      return new Promise(async (res, rej) => {
+      return new Promise((res, rej) => {
         response.data.pipe(writer);
         let error = null;
         writer.on('error', err => {
