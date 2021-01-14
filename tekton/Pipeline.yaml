@@ -3,6 +3,8 @@ kind: Pipeline
 metadata:
   name: pumba-generic-pipeline
 spec:
+  workspaces:
+    - name: pipeline-ws
   params:
   - name: pumba-object
     type: string
@@ -13,9 +15,9 @@ spec:
   - name: image
     type: image
   tasks:
-  - name: container-build
+  - name: npm-test
     taskRef:
-      name: container-build-task
+      name: npm-test-task
     params:
       - name: pumba-object
         value: $(params.pumba-object)
@@ -23,6 +25,21 @@ spec:
       inputs:
       - name: source
         resource: source
+    workspaces:
+      - name: pipeline-ws
+        workspace: pipeline-ws
+  - name: container-build
+    taskRef:
+      name: container-build-task
+    params:
+      - name: pumba-object
+        value: $(params.pumba-object)
+    resources:
       outputs:
       - name: image
         resource: image
+    workspaces:
+      - name: pipeline-ws
+        workspace: pipeline-ws
+    runAfter:
+      - npm-test

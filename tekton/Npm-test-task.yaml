@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: npm-test-task
+spec:
+  resources:
+    inputs:
+      - name: source
+        type: git
+  params:
+    - name: pumba-object
+      description: location of the pumba micro-service code
+      type: string
+  steps:
+    - name: npm-test
+      image: docker.io/shirmon/rhel7.9-node14.15.3:latest
+      workingDir: /workspace/source/$(params.pumba-object)
+      script: |
+        #!/bin/bash
+        npm i
+        /workspace/source/$(params.pumba-object)/node_modules/mocha/bin/mocha
+  workspaces:
+  - name: pipeline-ws
+    description: Generic pipeline workspace where the git repo is pulled
+    mountPath: /workspace/source

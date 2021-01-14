@@ -4,9 +4,6 @@ metadata:
   name: container-build-task
 spec:
   resources:
-    inputs:
-      - name: source
-        type: git
     outputs:
       - name: image
         type: image
@@ -26,3 +23,7 @@ spec:
         buildah bud -t $(resources.outputs.image.url) . && \
         buildah login docker.io && \
         buildah push $(resources.outputs.image.url)
+  workspaces:
+  - name: pipeline-ws
+    description: Generic pipeline workspace where the git repo is pulled
+    mountPath: /workspace/source
