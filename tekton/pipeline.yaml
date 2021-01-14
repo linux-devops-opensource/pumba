@@ -28,6 +28,17 @@ spec:
     workspaces:
       - name: pipeline-ws
         workspace: pipeline-ws
+  - name: eslint-task
+    taskRef:
+      name: eslint-task
+    params:
+      - name: pumba-object
+        value: $(params.pumba-object)
+    workspaces:
+      - name: pipeline-ws
+        workspace: pipeline-ws
+    runAfter:
+      - npm-test
   - name: container-build
     taskRef:
       name: container-build-task
@@ -42,4 +53,4 @@ spec:
       - name: pipeline-ws
         workspace: pipeline-ws
     runAfter:
-      - npm-test
+      - eslint-task

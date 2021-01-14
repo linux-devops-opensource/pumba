@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: eslint-task
+spec:
+  params:
+    - name: pumba-object
+      description: location of the pumba micro-service code
+      type: string
+  steps:
+    - name: eslint
+      image: docker.io/shirmon/rhel7.9-node14.15.3:latest
+      workingDir: /workspace/source/$(params.pumba-object)
+      command: ["npx", "eslint", "*.js"]
+  workspaces:
+  - name: pipeline-ws
+    description: Generic pipeline workspace where the git repo is pulled
+    mountPath: /workspace/source
