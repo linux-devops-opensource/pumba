@@ -15,4 +15,13 @@ spec:
       name: pval-rpmval-image
   - name: source
     resourceRef:
-      name: pval-rpmval-git
+      name: pval-rpmval-git-branch
+  workspaces:
+  - name: pipeline-ws
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
