@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: projector
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: projector
+  POSTGRES_USER: projector
+  POSTGRES_PASSWORD: project0r
