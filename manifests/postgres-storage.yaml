@@ -18,7 +18,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: postgres-pv-claim
-  namespace: projector
+  namespace: default
   labels:
     app: postgres
 spec:
