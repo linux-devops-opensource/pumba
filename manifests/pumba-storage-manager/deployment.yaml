@@ -5,6 +5,7 @@ metadata:
     app.kubernetes.io/component: storage-manager
     app.kubernetes.io/name: pumba-storage-manager
     app.kubernetes.io/part-of: pumba
+    app.kubernetes.io/managed-by: argocd
   name: pumba-storage-manager
   namespace: pumba
 spec:
@@ -22,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-storage-manager
     spec:
       containers:
-      - image: gcr.io/feisty-return-300415/pumba-storage-manager:6d51436
+      - image: gcr.io/feisty-return-300415/pumba-storage-manager:09e908e
         name: pumba-storage-manager
         ports:
         - containerPort: 5000
