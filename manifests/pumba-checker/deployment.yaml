@@ -5,6 +5,7 @@ metadata:
     app.kubernetes.io/component: checker
     app.kubernetes.io/name: pumba-checker
     app.kubernetes.io/part-of: pumba
+    app.kubernetes.io/managed-by: argocd
   name: pumba-checker
   namespace: pumba
 spec:
@@ -22,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-checker
     spec:
       containers:
-      - image: gcr.io/feisty-return-300415/pumba-checker:a88197e
+      - image: gcr.io/feisty-return-300415/pumba-checker:4e996c1
         name: pumba-checker
         ports:
         - containerPort: 5000
