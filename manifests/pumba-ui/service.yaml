@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: ui
+    app.kubernetes.io/name: pumba-ui
+    app.kubernetes.io/part-of: pumba
+  name: pumba-ui
+  namespace: pumba
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: pumba-ui
