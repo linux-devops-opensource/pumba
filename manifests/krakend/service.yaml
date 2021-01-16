@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: api-gateway
+    app.kubernetes.io/name: pumba-api-gateway
+    app.kubernetes.io/part-of: pumba
+    app.kubernetes.io/managed-by: argocd
+  name: pumba-api-gateway
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: pumba-api-gateway
