@@ -5,6 +5,7 @@ metadata:
     app.kubernetes.io/component: ui
     app.kubernetes.io/name: pumba-ui
     app.kubernetes.io/part-of: pumba
+    app.kubernetes.io/managed-by: argocd
   name: pumba-ui
   namespace: pumba
 spec:

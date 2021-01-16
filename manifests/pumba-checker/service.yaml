@@ -5,6 +5,7 @@ metadata:
     app.kubernetes.io/component: checker
     app.kubernetes.io/name: pumba-checker
     app.kubernetes.io/part-of: pumba
+    app.kubernetes.io/managed-by: argocd
   name: pumba-checker
   namespace: pumba
 spec:

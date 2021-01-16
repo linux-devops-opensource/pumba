@@ -5,6 +5,7 @@ metadata:
     app.kubernetes.io/component: validator
     app.kubernetes.io/name: pumba-validator
     app.kubernetes.io/part-of: pumba
+    app.kubernetes.io/managed-by: argocd
   name: pumba-validator
   namespace: pumba
 spec:

@@ -5,6 +5,7 @@ metadata:
     app.kubernetes.io/component: storage-manager
     app.kubernetes.io/name: pumba-storage-manager
     app.kubernetes.io/part-of: pumba
+    app.kubernetes.io/managed-by: argocd
   name: pumba-storage-manager
   namespace: pumba
 spec:

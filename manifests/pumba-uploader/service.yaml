@@ -5,6 +5,7 @@ metadata:
     app.kubernetes.io/component: uploader
     app.kubernetes.io/name: pumba-uploader
     app.kubernetes.io/part-of: pumba
+    app.kubernetes.io/managed-by: argocd
   name: pumba-uploader
   namespace: pumba
 spec:
