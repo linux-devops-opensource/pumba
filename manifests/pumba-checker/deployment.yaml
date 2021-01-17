@@ -23,10 +23,10 @@ spec:
         app.kubernetes.io/name: pumba-checker
     spec:
       containers:
-      - image: gcr.io/feisty-return-300415/pumba-checker:4e996c1
+      - image: gcr.io/feisty-return-300415/pumba-checker:a72c351
         name: pumba-checker
         ports:
-        - containerPort: 3000
+        - containerPort: 5000
           protocol: TCP
         resources:
           requests:
