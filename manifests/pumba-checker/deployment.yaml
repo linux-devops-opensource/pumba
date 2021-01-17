@@ -26,7 +26,7 @@ spec:
       - image: gcr.io/feisty-return-300415/pumba-checker:4e996c1
         name: pumba-checker
         ports:
-        - containerPort: 5000
+        - containerPort: 3000
           protocol: TCP
         resources:
           requests:

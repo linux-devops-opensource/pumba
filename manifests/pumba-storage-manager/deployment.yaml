@@ -26,7 +26,7 @@ spec:
       - image: gcr.io/feisty-return-300415/pumba-storage-manager:09e908e
         name: pumba-storage-manager
         ports:
-        - containerPort: 5000
+        - containerPort: 3000
           protocol: TCP
         resources:
           requests:

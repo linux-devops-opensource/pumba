@@ -26,7 +26,7 @@ spec:
       - image: gcr.io/feisty-return-300415/pumba-validator:f2968cf
         name: pumba-validator
         ports:
-        - containerPort: 5000
+        - containerPort: 3000
           protocol: TCP
         resources:
           requests:
