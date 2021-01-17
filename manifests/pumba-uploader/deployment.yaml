@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-uploader
     spec:
       containers:
-      - image: gcr.io/feisty-return-300415/pumba-uploader:f09d1d9
+      - image: gcr.io/feisty-return-300415/pumba-uploader:7a2f995
         name: pumba-uploader
         ports:
         - containerPort: 5000
