@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-validator
     spec:
       containers:
-      - image: gcr.io/feisty-return-300415/pumba-validator:c6ce03f
+      - image: gcr.io/feisty-return-300415/pumba-validator:77daf39
         name: pumba-validator
         ports:
         - containerPort: 5000
