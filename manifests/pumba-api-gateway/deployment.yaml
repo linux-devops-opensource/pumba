@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: pumba-api-gateway
-        image: gcr.io/feisty-return-300415/pumba-api-gateway:04f6f02
+        image: gcr.io/feisty-return-300415/pumba-api-gateway:88fca44
         ports:
         - containerPort: 8080
         command: [ "/usr/bin/krakend" ]
