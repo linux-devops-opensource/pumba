@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-ui
     spec:
       containers:
-      - image: gcr.io/feisty-return-300415/pumba-ui:5f140ff
+      - image: gcr.io/feisty-return-300415/pumba-ui:aef0b43
         name: pumba-ui
         ports:
         - containerPort: 80
