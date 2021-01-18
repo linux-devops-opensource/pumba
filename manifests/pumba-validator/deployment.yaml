@@ -23,11 +23,8 @@ spec:
         app.kubernetes.io/name: pumba-validator
     spec:
       containers:
-      - image: gcr.io/feisty-return-300415/pumba-validator:77daf39
+      - image: gcr.io/feisty-return-300415/pumba-validator:d11a1b8
         name: pumba-validator
-        env:
-        - name: K8STOKEN
-          value: eyJhbGciOiJSUzI1NiIsImtpZCI6IjdWZHZhNVVwRE1RRlBydkZ3SXJUaTFtRHZhQWVmN3pKOFpGSWFnOVZ3U1kifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJwdW1iYSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkZWZhdWx0LXRva2VuLWNnOHprIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImRlZmF1bHQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI0NzZiNDllYS0zZjViLTQzY2MtOTQ3MS05NmMyNzNmYmQyZDIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6cHVtYmE6ZGVmYXVsdCJ9.SV8qXKYX7nQTR4JdZHY7AT-ey6_YKb9j_HxAUCE7b733isACVuAEciu6B5IbL1pcV_0Hk_mMM3XN23RzTd9QiRj3rhKosqu___4JtsXDbSNS6Ep77mPC7KIO4pei-5MAQ8D8pQBVpfKxhsJgwg2hEDWBctNKN6g73MQPQIfvdPJiiPPF191OfrO-xpf-qrVulMfk2cXHcvXIr-dZk_VAnpEnS8XYV2cKq5rfsI4UMN3npoFQGsT1CehGnYhr3yLsNa_E8nOyAiUhaQkmG2iUmGTVngC1jZZmwnXDG-77Sht9BZecyDB5E4iiwqEbDdwyvdM0PlcwE1KQVzBwHPV6IWyHczNxiGgBnQavGEQ71-YO1Q3LXNwesIoqsAPruD5QCHT4LaouZGhkeIOXJK1QvYuTZMDvMy0gCJgnTME3rkePJ7Ffc5bgd9oLQYFgJr5j4Nd0R5SlqAOluquoLMNV92MZ2baLy-Wzu6IDSpBobw3u161MllsCcFwoPDqsSXGNJJe653piEQOuyO38JGRXsn6V6ipy8sjA3M_R1BrHGfrqJjtZ0AUERapkqFDWzfEok_qvBcxvaxe-2llbFQ9wI3AitqDhuDixfYpnSpsMEr5Xo8VNROGbfGNw7pASEDbyvqEchmQr7u8MSoUW9cYfscmyboq1iHePUyv2SrjG4AA
         ports:
         - containerPort: 5000
           protocol: TCP
