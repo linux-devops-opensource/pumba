@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-validator
     spec:
       containers:
-      - image: gcr.io/project-ci-305121/pumba-validator:79ebdfc
+      - image: gcr.io/project-ci-305121/pumba-validator:a9ee48f
         name: pumba-validator
         env:
         - name: K8STOKEN
