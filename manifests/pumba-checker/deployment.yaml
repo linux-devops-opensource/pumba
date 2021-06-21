@@ -25,6 +25,9 @@ spec:
       containers:
       - image: gcr.io/sodium-inverter-285420/pumba-checker:test
         name: pumba-checker
+        env:
+        - name: nexusURL
+          value: "http://10.0.190.77:8081"
         ports:
         - containerPort: 5000
           protocol: TCP
