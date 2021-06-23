@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-checker
     spec:
       containers:
-      - image: gcr.io/sodium-inverter-285420/pumba-checker:test
+      - image: gcr.io/sodium-inverter-285420/pumba-checker:test2
         name: pumba-checker
         env:
         - name: nexusURL
