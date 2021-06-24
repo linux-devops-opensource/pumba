@@ -33,7 +33,7 @@ spec:
                       value: pumba-validator
                 volumeClaimTemplates:
                 - metadata:
-                    name: workdir-{{workflow.parameters.microservicename}}
+                    name: workdir
                   spec:
                     accessModes: [ "ReadWriteOnce" ]
                     resources:
