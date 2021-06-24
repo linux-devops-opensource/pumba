@@ -27,7 +27,7 @@ spec:
                 entrypoint: main
                 arguments:
                   parameters:
-                    - name: hook_id
+                    - name: git_sha
                       value: test
                     - name: microservicename
                       value: pumba-ui
@@ -92,7 +92,7 @@ spec:
                     image: gcr.io/kaniko-project/executor
                     args: ["--dockerfile=/src/git/Dockerfile",
                           "--context=dir:///src/git",
-                          "--destination=gcr.io/sodium-inverter-285420/{{workflow.parameters.microservicename}}:{{workflow.parameters.hook_id}}"]
+                          "--destination=gcr.io/sodium-inverter-285420/{{workflow.parameters.microservicename}}:{{workflow.parameters.git_sha}}"]
                     env:
                       - name: GOOGLE_APPLICATION_CREDENTIALS
                         value: /kanikocred/config.json
@@ -117,7 +117,7 @@ spec:
                     command: [sh, -c]
                     args:
                     - "set -x && \
-                      sed 's/GOOGLE_CLOUD_PROJECT/sodium-inverter-285420/g' /src/git/kubernetes.yaml.tpl | sed 's/COMMIT_SHA/{{workflow.parameters.hook_id}}/g' > /src/pumba/manifests/{{workflow.parameters.microservicename}}/deployment.yaml && \
+                      sed 's/GOOGLE_CLOUD_PROJECT/sodium-inverter-285420/g' /src/git/kubernetes.yaml.tpl | sed 's/COMMIT_SHA/{{workflow.parameters.git_sha}}/g' > /src/pumba/manifests/{{workflow.parameters.microservicename}}/deployment.yaml && \
                       cd /src/pumba && \
                       git config --global user.email 'argo-builder@devops.ofek' && \
                       git add manifests/{{workflow.parameters.microservicename}}/deployment.yaml && \
@@ -149,5 +149,5 @@ spec:
           parameters:
             - src:
                 dependencyName: git-webhook
-                dataKey: body.hook_id
+                dataKey: body.after
               dest: spec.arguments.parameters.0.value
