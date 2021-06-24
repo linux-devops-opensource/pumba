@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-validator
     spec:
       containers:
-      - image: gcr.io/sodium-inverter-285420/pumba-validator:303998111
+      - image: gcr.io/sodium-inverter-285420/pumba-validator:304163686
         name: pumba-validator
         env:
         - name: K8STOKEN
