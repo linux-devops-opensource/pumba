@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
-  name: pumba-validator2-sensor
+  name: pumba-validator-sensor
 spec:
   template:
     serviceAccountName: operate-workflow-sa
