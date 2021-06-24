@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: pumba-rest-cd
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      artifacts:
+        - name: source
+          path: /src/pumba
+          git:
+            repo: git@github.com:linux-devops-opensource/pumba.git
+            revision: main
+            sshPrivateKeySecret:
+              name: gitcred
+              key: id_rsa
+    container:
+      image: alpine/git
+      command: [sh, -c]
+      args:
+      - "set -x && \
+        sed 's/GOOGLE_CLOUD_PROJECT/sodium-inverter-285420/g' /src/git/kubernetes.yaml.tpl | sed 's/COMMIT_SHA/{{workflow.parameters.git_sha}}/g' > /src/pumba/manifests/{{workflow.parameters.microservicename}}/deployment.yaml && \
+        cd /src/pumba && \
+        git config --global user.email 'argo-builder@devops.ofek' && \
+        git add manifests/{{workflow.parameters.microservicename}}/deployment.yaml && \
+        git commit -m 'Deploy via CI' && \
+        mkdir /root/.ssh && \
+        cp /root/tmpssh/* /root/.ssh/ && \
+        chmod 400 /root/.ssh/id_rsa && \
+        git push"
+      volumeMounts:
+        - name: workdir
+          mountPath: /src
+        - name: git-secret
+          mountPath: /root/tmpssh

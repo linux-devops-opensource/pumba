@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
-  name: pumba-validator-sensor
+  name: pumba-validator2-sensor
 spec:
   template:
     serviceAccountName: operate-workflow-sa
@@ -25,12 +25,6 @@ spec:
                 generateName: pumba-validator-
               spec:
                 entrypoint: main
-                arguments:
-                  parameters:
-                    - name: git_sha
-                      value: test
-                    - name: microservicename
-                      value: pumba-validator
                 volumeClaimTemplates:
                 - metadata:
                     name: workdir
@@ -39,98 +33,26 @@ spec:
                     resources:
                       requests:
                         storage: 1Gi
+                arguments:
+                  parameters:
+                    - name: git_sha
+                      value: test2
+                    - name: microservicename
+                      value: pumba-validator
                 templates:
                 - name: main
                   dag:
                     tasks:
-                      - name: git-checkout
-                        template: git-checkout
-                        arguments:
-                          parameters:
-                            - name: gitrepo
-                              value: https://github.com/linux-devops-opensource/{{workflow.parameters.microservicename}}.git
-                      # - name: npm-test
-                      #   template: npm-test
-                      #   dependencies:
-                      #     - git-checkout
-                      - name: dockerBuild
-                        template: docker-build
+                      - name: generic-pumba-wf
+                        templateRef:
+                          name: generic-pumba-ci
+                          template: main
+                      - name: pumba-rest-cd
+                        templateRef:
+                          name: pumba-rest-cd
+                          template: main
                         dependencies:
-                          # - npm-test
-                          - git-checkout
-                      - name: edit-git-for-cd
-                        template: edit-git-for-cd
-                        dependencies:
-                          - dockerBuild
-                - name: git-checkout
-                  inputs:
-                    parameters:
-                    - name: gitrepo
-                    artifacts:
-                    - name: source
-                      path: /src/git
-                      git:
-                        repo: "{{inputs.parameters.gitrepo}}"
-                        revision: main
-                  container:
-                    image: golang:1.9.2
-                    command: ["/bin/sh", "-c"]
-                    args: ["cd /src/git && git status && ls -l"]
-                    volumeMounts:
-                      - name: workdir
-                        mountPath: /src
-                - name: npm-test
-                  container:
-                    image: gcr.io/sodium-inverter-285420/pumba-ubi-minimal-node14:latest
-                    volumeMounts:
-                      - name: workdir
-                        mountPath: /src
-                    command: [sh, -c]
-                    args: ["cd /src/git;npm install;npm test;npx eslint *.js"]
-                - name: docker-build
-                  container:
-                    image: gcr.io/kaniko-project/executor
-                    args: ["--dockerfile=/src/git/Dockerfile",
-                          "--context=dir:///src/git",
-                          "--destination=gcr.io/sodium-inverter-285420/{{workflow.parameters.microservicename}}:{{workflow.parameters.git_sha}}"]
-                    env:
-                      - name: GOOGLE_APPLICATION_CREDENTIALS
-                        value: /kanikocred/config.json
-                    volumeMounts:
-                      - name: workdir
-                        mountPath: /src
-                      - name: kaniko-secret
-                        mountPath: /kanikocred
-                - name: edit-git-for-cd
-                  inputs:
-                    artifacts:
-                      - name: source
-                        path: /src/pumba
-                        git:
-                          repo: git@github.com:linux-devops-opensource/pumba.git
-                          revision: main
-                          sshPrivateKeySecret:
-                            name: gitcred
-                            key: id_rsa
-                  container:
-                    image: alpine/git
-                    command: [sh, -c]
-                    args:
-                    - "set -x && \
-                      sed 's/GOOGLE_CLOUD_PROJECT/sodium-inverter-285420/g' /src/git/kubernetes.yaml.tpl | sed 's/COMMIT_SHA/{{workflow.parameters.git_sha}}/g' > /src/pumba/manifests/{{workflow.parameters.microservicename}}/deployment.yaml && \
-                      cd /src/pumba && \
-                      git config --global user.email 'argo-builder@devops.ofek' && \
-                      git add manifests/{{workflow.parameters.microservicename}}/deployment.yaml && \
-                      git commit -m 'Deploy via CI' && \
-                      mkdir /root/.ssh && \
-                      cp /root/tmpssh/* /root/.ssh/ && \
-                      chmod 400 /root/.ssh/id_rsa && \
-                      git push"
-                    volumeMounts:
-                      - name: workdir
-                        mountPath: /src
-                      - name: git-secret
-                        mountPath: /root/tmpssh
+                        - generic-pumba-wf
                 volumes:
                   - name: kaniko-secret
                     secret:
