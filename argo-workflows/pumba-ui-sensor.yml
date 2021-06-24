@@ -1,5 +1,4 @@
-
-https://github.com/linux-devops-opensource/pumba.gitapiVersion: argoproj.io/v1alpha1
+apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
   name: pumba-ui-sensor
