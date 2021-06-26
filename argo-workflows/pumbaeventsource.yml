@@ -36,3 +36,7 @@ spec:
       port: "12000"
       endpoint: /pumba-pypi-val
       method: POST
+    pumba-apigw-val:
+      port: "12000"
+      endpoint: /pumba-apigw
+      method: POST
