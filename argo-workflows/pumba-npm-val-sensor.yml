@@ -1,0 +1,61 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: pumba-npm-val-sensor
+spec:
+  template:
+    serviceAccountName: operate-workflow-sa
+  dependencies:
+    - name: git-webhook
+      eventSourceName: webhook
+      eventName: pumba-npm-val
+  triggers:
+    - template:
+        name: webhook-workflow-trigger
+        k8s:
+          group: argoproj.io
+          version: v1alpha1
+          resource: workflows
+          operation: create
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: pumba-npm-val-
+              spec:
+                entrypoint: main
+                arguments:
+                  parameters:
+                    - name: git_sha
+                      value: test
+                    - name: microservicename
+                      value: pumba-npm-validator
+                volumeClaimTemplates:
+                - metadata:
+                    name: workdir
+                  spec:
+                    accessModes: [ "ReadWriteOnce" ]
+                    resources:
+                      requests:
+                        storage: 1Gi
+                templates:
+                - name: main
+                  dag:
+                    tasks:
+                      - name: generic-pumba-wf
+                        templateRef:
+                          name: generic-pumba-ci
+                          template: main
+                volumes:
+                  - name: kaniko-secret
+                    secret:
+                      secretName: regcred
+                      items:
+                        - key: auth.json
+                          path: config.json
+          parameters:
+            - src:
+                dependencyName: git-webhook
+                dataKey: body.after
+              dest: spec.arguments.parameters.0.value

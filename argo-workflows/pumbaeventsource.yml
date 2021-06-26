@@ -28,3 +28,11 @@ spec:
       port: "12000"
       endpoint: /pumba-rpm-val
       method: POST
+    pumba-npm-val:
+      port: "12000"
+      endpoint: /pumba-npm-val
+      method: POST
+    pumba-pypi-val:
+      port: "12000"
+      endpoint: /pumba-pypi-val
+      method: POST
