@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: git-checkout
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: gitrepo
+      artifacts:
+      - name: source
+        path: /src/git
+        git:
+          repo: "{{inputs.parameters.gitrepo}}"
+          revision: main
+    container:
+      image: gcr.io/sodium-inverter-285420/pumba-ubi-minimal-node14:latest
+      command: ["/bin/sh", "-c"]
+      args: ["cd /src/git && ls -l"]
+      volumeMounts:
+        - name: workdir
+          mountPath: /src

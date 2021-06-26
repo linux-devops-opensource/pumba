@@ -9,56 +9,23 @@ spec:
     dag:
       tasks:
         - name: git-checkout
-          template: git-checkout
+          templateRef:
+            name: git-checkout
+            template: main
           arguments:
             parameters:
               - name: gitrepo
                 value: https://github.com/linux-devops-opensource/{{workflow.parameters.microservicename}}.git
         # - name: npm-test
-        #   template: npm-test
+          # templateRef:
+          #   name: npm-test
+          #   template: main
         #   dependencies:
         #     - git-checkout
         - name: dockerBuild
-          template: docker-build
+          templateRef:
+            name: kaniko
+            template: main
           dependencies:
             - git-checkout
             # - npm-test
-  - name: git-checkout
-    inputs:
-      parameters:
-      - name: gitrepo
-      artifacts:
-      - name: source
-        path: /src/git
-        git:
-          repo: "{{inputs.parameters.gitrepo}}"
-          revision: main
-    container:
-      image: gcr.io/sodium-inverter-285420/pumba-ubi-minimal-node14:latest
-      command: ["/bin/sh", "-c"]
-      args: ["cd /src/git && ls -l"]
-      volumeMounts:
-        - name: workdir
-          mountPath: /src
-  - name: npm-test
-    container:
-      image: gcr.io/sodium-inverter-285420/pumba-ubi-minimal-node14:latest
-      volumeMounts:
-        - name: workdir
-          mountPath: /src
-      command: [sh, -c]
-      args: ["cd /src/git && npm install && npm test"]
-  - name: docker-build
-    container:
-      image: gcr.io/kaniko-project/executor
-      args: ["--dockerfile=/src/git/Dockerfile",
-            "--context=dir:///src/git",
-            "--destination=gcr.io/sodium-inverter-285420/{{workflow.parameters.microservicename}}:{{workflow.parameters.git_sha}}"]
-      env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /kanikocred/config.json
-      volumeMounts:
-        - name: workdir
-          mountPath: /src
-        - name: kaniko-secret
-          mountPath: /kanikocred

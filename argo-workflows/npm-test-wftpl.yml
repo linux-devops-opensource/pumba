@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: npm-test
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    container:
+      image: gcr.io/sodium-inverter-285420/pumba-ubi-minimal-node14:latest
+      volumeMounts:
+        - name: workdir
+          mountPath: /src
+      command: [sh, -c]
+      args: ["cd /src/git && npm install && npm test"]

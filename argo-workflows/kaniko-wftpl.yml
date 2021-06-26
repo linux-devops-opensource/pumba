@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: kaniko
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    container:
+      image: gcr.io/kaniko-project/executor
+      args: ["--dockerfile=/src/git/Dockerfile",
+            "--context=dir:///src/git",
+            "--destination=gcr.io/sodium-inverter-285420/{{workflow.parameters.microservicename}}:{{workflow.parameters.git_sha}}"]
+      env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /kanikocred/config.json
+      volumeMounts:
+        - name: workdir
+          mountPath: /src
+        - name: kaniko-secret
+          mountPath: /kanikocred

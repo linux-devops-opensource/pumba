@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
-  name: pumba-validator-sensor
+  name: pumba-apigw-sensor
 spec:
   template:
     serviceAccountName: operate-workflow-sa
   dependencies:
     - name: git-webhook
       eventSourceName: webhook
-      eventName: pumba-val
+      eventName: pumba-apigw
   triggers:
     - template:
         name: webhook-workflow-trigger
@@ -22,9 +22,15 @@ spec:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                generateName: pumba-validator-
+                generateName: pumba-apigw-
               spec:
                 entrypoint: main
+                arguments:
+                  parameters:
+                    - name: git_sha
+                      value: test
+                    - name: microservicename
+                      value: pumba-api-gateway
                 volumeClaimTemplates:
                 - metadata:
                     name: workdir
@@ -33,26 +39,26 @@ spec:
                     resources:
                       requests:
                         storage: 100Mi
-                arguments:
-                  parameters:
-                    - name: git_sha
-                      value: test2
-                    - name: microservicename
-                      value: pumba-validator
                 templates:
                 - name: main
                   dag:
                     tasks:
-                      - name: generic-pumba-wf
+                      - name: git-checkout
                         templateRef:
-                          name: generic-pumba-ci
+                          name: git-checkout
                           template: main
-                      - name: pumba-rest-cd
+                      - name: kaniko
+                        templateRef:
+                          name: kaniko
+                          template: main
+                        dependencies:
+                        - git-checkout
+                      - name: pumba-cd
                         templateRef:
                           name: pumba-rest-cd
                           template: main
                         dependencies:
-                        - generic-pumba-wf
+                        - kaniko
                 volumes:
                   - name: kaniko-secret
                     secret:
