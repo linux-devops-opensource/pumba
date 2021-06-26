@@ -3,10 +3,6 @@ kind: EventSource
 metadata:
   name: webhook
 spec:
-  service:
-    ports:
-      - port: 12000
-        targetPort: 12000
   webhook:
     pumba-val:
       port: "12000"
@@ -27,4 +23,8 @@ spec:
     pumba-ui:
       port: "12000"
       endpoint: /pumba-ui
+      method: POST
+    pumba-rpm-val:
+      port: "12000"
+      endpoint: /pumba-rpm-val
       method: POST

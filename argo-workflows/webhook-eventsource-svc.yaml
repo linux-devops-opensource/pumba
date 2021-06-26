@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/instance: pumba-ci
+    controller: eventsource-controller
+    eventsource-name: webhook
+    owner-name: webhook
+  name: webhook-eventsource-svc
+  namespace: argo-events
+spec:
+  ports:
+  - port: 12000
+    protocol: TCP
+    targetPort: 12000
+  selector:
+    controller: eventsource-controller
+    eventsource-name: webhook
+    owner-name: webhook
+  sessionAffinity: None
+  type: LoadBalancer
