@@ -47,6 +47,10 @@ spec:
                         templateRef:
                           name: git-checkout
                           template: main
+                        arguments:
+                          parameters:
+                            - name: gitrepo
+                              value: https://github.com/linux-devops-opensource/{{workflow.parameters.microservicename}}.git
                       - name: kaniko
                         templateRef:
                           name: kaniko
