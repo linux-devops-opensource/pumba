@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-checker
     spec:
       containers:
-      - image: gcr.io/sodium-inverter-285420/pumba-checker:c2978bce9184866d59664426dc3356a2a83718fc
+      - image: gcr.io/sodium-inverter-285420/pumba-checker:e20a2748c2d82be425e95849465b3b2606f280d7
         name: pumba-checker
         ports:
         - containerPort: 5000
