@@ -25,7 +25,7 @@ spec:
         cd /src/pumba && \
         git config --global user.email 'argo-builder@devops.ofek' && \
         git add manifests/{{workflow.parameters.microservicename}}/deployment.yaml && \
-        git commit -m 'Deploy via CI' && \
+        git commit -m '{{ workflow.parameters.last_commit }}' && \
         mkdir /root/.ssh && \
         cp /root/tmpssh/* /root/.ssh/ && \
         chmod 400 /root/.ssh/id_rsa && \
