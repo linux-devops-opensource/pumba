@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-ui
     spec:
       containers:
-      - image: gcr.io/sodium-inverter-285420/pumba-ui:d6112a6d8a9a68d81e0b03cc83e25a2559b9216c
+      - image: gcr.io/sodium-inverter-285420/pumba-ui:179385e8a970e99828405678f8f4aabe8f1bb2da
         name: pumba-ui
         ports:
         - containerPort: 80
