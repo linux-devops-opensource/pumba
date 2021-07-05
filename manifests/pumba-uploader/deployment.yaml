@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-uploader
     spec:
       containers:
-      - image: gcr.io/sodium-inverter-285420/pumba-uploader:2807f69ea720f76fd4c86c9a0d88c8eff6e71203
+      - image: gcr.io/sodium-inverter-285420/pumba-uploader:e3652616c55023f57159534051476860484fb3ba
         name: pumba-uploader
         ports:
         - containerPort: 5000
