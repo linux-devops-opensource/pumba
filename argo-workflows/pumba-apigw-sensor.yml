@@ -65,6 +65,10 @@ spec:
                           template: main
                         dependencies:
                         - kaniko
+                ttlStrategy:
+                  secondsAfterCompletion: 300
+                podGC:
+                  strategy: OnPodCompletion
                 volumes:
                   - name: kaniko-secret
                     secret:

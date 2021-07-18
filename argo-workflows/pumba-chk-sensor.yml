@@ -55,6 +55,10 @@ spec:
                           template: main
                         dependencies:
                         - generic-pumba-wf
+                ttlStrategy:
+                  secondsAfterCompletion: 300
+                podGC:
+                  strategy: OnPodCompletion
                 volumes:
                   - name: kaniko-secret
                     secret:

@@ -47,6 +47,10 @@ spec:
                         templateRef:
                           name: generic-pumba-ci
                           template: main
+                ttlStrategy:
+                  secondsAfterCompletion: 300
+                podGC:
+                  strategy: OnPodCompletion
                 volumes:
                   - name: kaniko-secret
                     secret:
