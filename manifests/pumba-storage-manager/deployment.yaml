@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: pumba-storage-manager
     spec:
       containers:
-      - image: gcr.io/sodium-inverter-285420/pumba-storage-manager:d1f6de517c9019e0cc63832dfe2144884660a7b0
+      - image: gcr.io/sodium-inverter-285420/pumba-storage-manager:da07e30147b4f40a94b76805b745d28880dea4c8
         name: pumba-storage-manager
         ports:
         - containerPort: 5000
