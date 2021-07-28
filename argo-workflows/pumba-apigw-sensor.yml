@@ -66,9 +66,9 @@ spec:
                         dependencies:
                         - kaniko
                 ttlStrategy:
-                  secondsAfterCompletion: 300
+                  secondsAfterSuccess: 300
                 podGC:
-                  strategy: OnPodCompletion
+                  strategy: OnWorkflowSuccess
                 volumes:
                   - name: kaniko-secret
                     secret:
