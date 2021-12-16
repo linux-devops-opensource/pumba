@@ -1,0 +1,31 @@
+{
+    // this Pkg object will be used in the checker, storage manager, validator, and uploader 
+    // it is contained inside the Session object 
+    // this is the general spec held in the ui (excluding the file itself), and each microservice uses only what it needs  
+	"Pkg": {
+		"title": "Pkg",
+		"type": "object",
+		"properties": {
+			"name": {
+				"type": "string"
+			},
+			"version": {
+				"type": "string"
+			},
+			"sha1": {
+				"type": "string"
+			},
+			"existInTarget": {
+				"type": "boolean"
+			},
+			"isValid": {
+				"type": "boolean"
+			},
+			"wasUploaded": {
+				"type": "boolean"
+			}
+		},
+		"required": [ "name", "version" ],
+		"additionalProperties": false
+	}
+}

@@ -1,0 +1,25 @@
+{
+    // this Session object will be used in the checker, storage manager, validator, and uploader 
+    // same for the Pkg 
+	"Session": {
+		"title": "Session",
+		"type": "object",
+		"properties": {
+			"sid": {
+				"type": "string"
+			},
+			"type": {
+				"type": "string"
+			},
+			"pkgs": {
+				"type": "array",
+				"items": {
+					"type": "object"
+                    // the Pkg spec is in the 2nd file 
+				}
+			}
+		},
+		"required": [ "sid", "type" ],
+		"additionalProperties": false
+	}
+}
