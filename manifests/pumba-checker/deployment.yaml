@@ -23,7 +23,8 @@ spec:
         app.kubernetes.io/name: pumba-checker
     spec:
       containers:
-      - image: gcr.io/sodium-inverter-285420/pumba-checker:40a48a3bb8084efd0b601c82c3bb05b2a7425e05
+      # - image: gcr.io/sodium-inverter-285420/pumba-checker:40a48a3bb8084efd0b601c82c3bb05b2a7425e05
+      - image: adihaimsohn/pumba-checker
         name: pumba-checker
         ports:
         - containerPort: 5000
@@ -35,3 +36,8 @@ spec:
           limits:
               memory: "250Mi"
               cpu: "250m"
+        env:
+         - name: "REPO_BASE_URL"
+           value: "http://20.103.157.39:8081"
+         - name: "SHA1_SEARCH_API"
+           value: "/service/rest/v1/search?sha1="

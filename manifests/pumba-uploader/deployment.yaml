@@ -23,7 +23,8 @@ spec:
         app.kubernetes.io/name: pumba-uploader
     spec:
       containers:
-      - image: gcr.io/sodium-inverter-285420/pumba-uploader:e5d88db7b80a7314aa82a0e00419e859a2a69219
+      # - image: gcr.io/sodium-inverter-285420/pumba-uploader:e5d88db7b80a7314aa82a0e00419e859a2a69219
+      - image: adihaimsohn/pumba-uploader
         name: pumba-uploader
         ports:
         - containerPort: 5000
@@ -35,3 +36,11 @@ spec:
           limits:
               memory: "250Mi"
               cpu: "250m"
+        env:
+         - name: "NEXUS_BASE_URL"
+           value: "http://20.103.157.39:8081"
+         - name: "NEXUS_UPLOAD_AUTH_TOKEN"
+           value: ""
+         - name: 'STORAGE_MANAGER_URL'
+           value: 'http://20.93.212.122:3000'
+

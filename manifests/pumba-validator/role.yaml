@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: job-launcer-service-account
+  namespace: pumba
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: pumba
+  name: validator-job-launcher
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["jobs"]
+  verbs: ["*"]
+
+--- 
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: job-launching-binding
+  namespace: pumba
+subjects:
+- kind: ServiceAccount
+  name: job-launcer-service-account
+roleRef:
+  kind: Role
+  name: validator-job-launcher
+  apiGroup: rbac.authorization.k8s.io
+
+--- 
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: job-launcer-service-account-secret
+  namespace: pumba
+  annotations:
+    kubernetes.io/service-account.name: job-launcer-service-account
+type: kubernetes.io/service-account-token
